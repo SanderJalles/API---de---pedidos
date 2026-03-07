@@ -7,7 +7,7 @@ const PORT = 3000;
 
 // Middlewares padrão
 app.use(cors());
-app.use(json()); 
+app.use( express.json()); 
 
 // Rotas da API conforme o desafio 
 app.use('/order', orderRoutes);

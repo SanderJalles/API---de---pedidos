@@ -27,4 +27,37 @@ export class OrderController {
       return res.status(500).json({ error: "Erro interno no servidor" });
     }
   }
+
+  async listAll(req: Request, res: Response) {
+  try {
+    const orders = await orderService.getAllOrders();
+    return res.status(200).json(orders);
+  } catch (error) {
+    return res.status(500).json({ error: "Erro ao listar pedidos" });
+  }
+}
+
+async update(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const updated = await orderService.updateOrder(id as string, req.body);
+    
+    return res.status(200).json(updated);
+  } catch (error: any) {
+    return res.status(400).json({ 
+      error: "Erro ao atualizar pedido", 
+      details: error.message 
+    });
+  }
+}
+
+async remove(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    await orderService.deleteOrder(id as string);
+    return res.status(204).send(); 
+  } catch (error) {
+    return res.status(400).json({ error: "Erro ao deletar pedido" });
+  }
+}
 }
