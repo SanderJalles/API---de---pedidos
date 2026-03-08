@@ -10,7 +10,7 @@ app.use(cors());
 app.use( express.json()); 
 
 // Rotas da API conforme o desafio 
-app.use('/order', orderRoutes);
+app.use(orderRoutes);
 
 // Middleware de Erro Global (Diferencial de robustez) 
 app.use((err: any, req: any, res: any, next: any) => {
@@ -20,5 +20,4 @@ app.use((err: any, req: any, res: any, next: any) => {
 
 app.listen(PORT, () => {
     console.log(`🚀 API Jitterbit rodando em http://localhost:${PORT}`);
-    console.log(`Endpoints disponíveis: POST /order e GET /order/:id`);
 });
