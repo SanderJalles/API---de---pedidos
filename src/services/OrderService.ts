@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import type { CreateOrderDTO } from '../dtos/CreateOrderDTO.js';
 import { OrderMapper } from '../mappers/OrderMapper.js';
+import { UpdateOrderDTO } from '../dtos/UpdateOrderDTO.js';
 
 const prisma = new PrismaClient();
 
@@ -28,7 +29,7 @@ export class OrderService {
   });
 }
 
-async updateOrder(orderId: string, data: any) {
+async updateOrder(orderId: string, data: UpdateOrderDTO) {
   return await prisma.$transaction(async (tx) => {
     
     const orderData = OrderMapper.toUpdatePersistence(data);

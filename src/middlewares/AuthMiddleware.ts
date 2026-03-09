@@ -24,7 +24,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     const secret = process.env.JWT_SECRET;
 
     if (!secret) {
-      console.error("❌ ERRO: JWT_SECRET não configurado no .env");
+      console.error("ERRO: JWT_SECRET não configurado no .env");
       return res.status(500).json({ error: 'Erro interno no servidor' });
     }
 

@@ -4,7 +4,7 @@ export interface CreateOrderDTO {
   dataCriacao: string;    
   items: {                
     idItem: string;       
-    quantidadeltem: number; 
-    valorltem: number;    
+    quantidadeItem: number; 
+    valorItem: number;    
   }[];
 }
