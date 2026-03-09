@@ -1,17 +1,10 @@
-interface OrderRequest {
-  numeroPedido: string;
-  valorTotal: number;
-  dataCriacao: string;
-  items: {
-    idItem: string;
-    quantidadeltem: number;
-    valorltem: number;
-  }[];
-}
+import { CreateOrderDTO } from "../dtos/CreateOrderDTO.js";
+import { UpdateOrderDTO } from "../dtos/UpdateOrderDTO.js";
+
 
 export class OrderMapper {
 
- static toPersistence(data: any) {
+ static toPersistence(data: CreateOrderDTO) {
     return {
       orderId: data.numeroPedido,
       value: data.valorTotal,
@@ -26,22 +19,22 @@ export class OrderMapper {
     };
   }
 
-  static toPersistenceItems(orderId: string, items: any[]) {
-    return items.map((item: any) => ({
-      orderId: orderId,
-      productId: parseInt(item.idItem),
-      quantity: item.quantidadeItem,
-      price: item.valorItem
-    }));
-  }
+  static toPersistenceItems(orderId: string, items: UpdateOrderDTO['items']) {
+  if (!items) return [];
+  return items.map(item => ({
+    orderId,
+    productId: parseInt(item.idItem),
+    quantity: item.quantidadeItem,
+    price: item.valorItem
+  }));
+}
 
  
-  static toUpdatePersistence(data: any) {
-  const value = data.valorTotal;
-  const date = data.dataCriacao ? new Date(data.dataCriacao) : new Date();
+  static toUpdatePersistence(data: UpdateOrderDTO) {
   return {
-    value: value,
-    creationDate: date
+    ...(data.numeroPedido && { orderId: data.numeroPedido }),
+    ...(data.valorTotal !== undefined && { value: data.valorTotal }),
+    ...(data.dataCriacao && { creationDate: new Date(data.dataCriacao) }),
   };
 }
 }

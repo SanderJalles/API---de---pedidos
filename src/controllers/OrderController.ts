@@ -1,12 +1,14 @@
 import { Request, Response } from 'express';
 import { OrderService } from '../services/OrderService.js';
+import { CreateOrderDTO } from '../dtos/CreateOrderDTO.js';
 
 const orderService = new OrderService();
 
 export class OrderController {
   async create(req: Request, res: Response) {
     try {
-      const order = await orderService.createOrder(req.body);
+      const data: CreateOrderDTO = req.body;
+      const order = await orderService.createOrder(data);
       return res.status(201).json(order); 
     } catch (error: any) { 
       return res.status(400).json({ error: error.message || "Erro ao processar pedido" });
